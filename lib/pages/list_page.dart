@@ -14,6 +14,9 @@ class HomePage extends StatelessWidget {
     ChildrenModel(id: 6, name: 'Megha', country: 'India', isNaughty: true),
     ChildrenModel(id: 7, name: 'Nistha', country: 'India', isNaughty: false),
   ];
+  final TextEditingController name = TextEditingController();
+
+  late final int selectedOption = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -55,13 +58,65 @@ class HomePage extends StatelessWidget {
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return Container(
-                    child: Column(children: [
-
-                    ]),
-                  );
+                  return OpenDialog(name: name, selectedOption: selectedOption);
                 });
           }),
+    );
+  }
+}
+
+class OpenDialog extends StatelessWidget {
+  const OpenDialog({
+    super.key,
+    required this.name,
+    required this.selectedOption,
+  });
+
+  final TextEditingController name;
+  final int selectedOption;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Add Information'),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      content: Container(
+        height: 400,
+        width: 300,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Name'),
+            TextFormField(controller: name),
+            const SizedBox(
+              height: 25,
+            ),
+            const Text('Country'),
+            TextFormField(controller: name),
+            const Text('Status'),
+            ListTile(
+              title: const Text('Naughty'),
+              leading: Radio(
+                value: 1,
+                groupValue: selectedOption,
+                onChanged: (value) {},
+              ),
+            ),
+            /*   const SizedBox(
+              width: 10,
+            ),*/
+            ListTile(
+              title: const Text('Nice'),
+              leading: Radio(
+                value: 2,
+                groupValue: selectedOption,
+                onChanged: (value) {},
+              ),
+            ),
+            ElevatedButton(onPressed: () {}, child: Text('Submit')),
+          ],
+        ),
+      ),
     );
   }
 }
