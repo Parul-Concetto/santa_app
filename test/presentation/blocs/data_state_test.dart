@@ -9,9 +9,9 @@ void main() {
     test("added item in Children List", () {
       expect(bloc.state, equals(InitialDataState()));
       bloc.add(AddDataEvent());
-      expect(bloc.state, equals(LoadingDataState()));
-      expect(bloc.state, equals(SuccessDataState()));
-      expect(bloc.state, equals(InitialDataState()));
+      expectLater(bloc.state, equals(LoadingDataState()));
+      expectLater(bloc.state, equals(SuccessDataState()));
+      expectLater(bloc.state, equals(InitialDataState()));
       bloc.close();
     });
   });

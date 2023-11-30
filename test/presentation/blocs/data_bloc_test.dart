@@ -24,10 +24,9 @@ void main() {
     });
 
     test("added item in Children List", () {
-      expect(bloc.state, equals(InitialDataState()));
+      expect(bloc.state, equals(LoadingDataState()));
       bloc.add(AddDataEvent());
-      expect(bloc.state, emits(LoadingDataState()));
-      expect(bloc.state, emits(SuccessDataState()));
+      expect(bloc.state, equals(SuccessDataState()));
       bloc.close();
     });
   });

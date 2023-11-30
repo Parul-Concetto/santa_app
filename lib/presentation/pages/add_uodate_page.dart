@@ -5,8 +5,8 @@ import 'package:santa_app/presentation/blocs/data_bloc/data_bloc.dart';
 import 'package:santa_app/presentation/blocs/data_bloc/data_event.dart';
 import 'package:santa_app/presentation/blocs/data_bloc/data_state.dart';
 
-class OpenDialog extends StatelessWidget {
-  const OpenDialog({
+class AddORUpdatePage extends StatelessWidget {
+  const AddORUpdatePage({
     super.key,
   });
 
@@ -20,6 +20,7 @@ class OpenDialog extends StatelessWidget {
       listener: (context, state) {
         if (state is SuccessDataState) {
           Navigator.pop(context);
+          bloc.clearController();
         }
         if (state is ErrorDataState) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
