@@ -5,15 +5,25 @@ import 'package:santa_app/bloc/data_bloc/data_event.dart';
 import 'package:santa_app/bloc/data_bloc/data_state.dart';
 import 'package:santa_app/core/app_strings.dart';
 
-class OpenDialog extends StatelessWidget {
+class OpenDialog extends StatefulWidget {
   const OpenDialog({
     super.key,
-    this.name,
-    this.selectedOption = 1,
   });
 
-  final TextEditingController? name;
-  final int? selectedOption;
+  @override
+  State<OpenDialog> createState() => _OpenDialogState();
+}
+
+class _OpenDialogState extends State<OpenDialog> {
+  late Map<String, dynamic> data;
+  dynamic bloc;
+  @override
+  void initState() {
+    data = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    BlocProvider.of<DataBloc>(context).addEditData(data['index']);
+    bloc = BlocProvider.of<DataBloc>(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +36,7 @@ class OpenDialog extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(
               '${state.errorMessage}',
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
               ),
             ),
@@ -35,7 +45,6 @@ class OpenDialog extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        final bloc = BlocProvider.of<DataBloc>(context);
         return Scaffold(
           appBar: AppBar(
               title: const Text(AppStrings.addInformation),
@@ -52,12 +61,18 @@ class OpenDialog extends StatelessWidget {
                   height: 30,
                 ),
                 const Text(AppStrings.name),
-                TextFormField(controller: bloc.nameController),
+                TextFormField(
+                  controller: bloc.nameController,
+                  readOnly: data['isEditPage'] ?? false,
+                ),
                 const SizedBox(
                   height: 25,
                 ),
                 const Text(AppStrings.country),
-                TextFormField(controller: bloc.countryController),
+                TextFormField(
+                  controller: bloc.countryController,
+                  readOnly: data['isEditPage'] ?? false,
+                ),
                 const SizedBox(
                   height: 25,
                 ),
@@ -103,9 +118,21 @@ class OpenDialog extends StatelessWidget {
                     height: 50,
                     width: 120,
                     child: ElevatedButton(
-                      onPressed: () => bloc.add(AddDataEvent()),
-                      child: const Text(AppStrings.submit,
-                          style: TextStyle(fontSize: 18)),
+                      onPressed: () => data['isEditPage']
+                          ? bloc.add(
+                              EditDataEvent(
+                                id: bloc.dataList[data['index']].id,
+                                name: bloc.dataList[data['index']].name,
+                                country: bloc.dataList[data['index']].country,
+                                isNaughty: bloc.groupValue == 1 ? true : false,
+                                index: data['index'],
+                              ),
+                            )
+                          : bloc.add(AddDataEvent()),
+                      child: const Text(
+                        AppStrings.submit,
+                        style: TextStyle(fontSize: 18),
+                      ),
                     ),
                   ),
                 ),

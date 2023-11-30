@@ -24,7 +24,10 @@ class HomePage extends StatelessWidget {
                   itemCount: BlocProvider.of<DataBloc>(context).dataList.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(context, AppRoutes.add,
+                            arguments: {'index': index, 'isEditPage': true});
+                      },
                       child: ListTile(
                         title: Text(
                             BlocProvider.of<DataBloc>(context)
