@@ -5,8 +5,8 @@ import 'package:santa_app/bloc/data_bloc/data_event.dart';
 import 'package:santa_app/bloc/data_bloc/data_state.dart';
 import 'package:santa_app/core/app_strings.dart';
 
-class OpenDialog extends StatelessWidget {
-  const OpenDialog({
+class AddORUpdatePage extends StatelessWidget {
+  const AddORUpdatePage({
     super.key,
   });
 
