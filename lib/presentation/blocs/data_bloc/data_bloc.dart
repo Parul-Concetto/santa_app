@@ -8,6 +8,8 @@ class DataBloc extends Bloc<DataEvent, DataState> {
   TextEditingController nameController = TextEditingController();
   TextEditingController countryController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  int? groupValue;
+  List<ChildrenModel> dataList = [];
 
   @override
   Future<void> close() {
@@ -15,9 +17,6 @@ class DataBloc extends Bloc<DataEvent, DataState> {
     nameController.dispose();
     return super.close();
   }
-
-  int? groupValue;
-  List<ChildrenModel> dataList = [];
 
   DataBloc() : super(InitialDataState()) {
     on<AddDataEvent>((event, emit) => addData(event, emit));
