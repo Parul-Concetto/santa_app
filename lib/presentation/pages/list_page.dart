@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:santa_app/bloc/data_bloc/data_bloc.dart';
-import 'package:santa_app/bloc/data_bloc/data_event.dart';
-import 'package:santa_app/bloc/data_bloc/data_state.dart';
 import 'package:santa_app/core/routes/app_routes.dart';
+import 'package:santa_app/presentation/blocs/data_bloc/data_bloc.dart';
+import 'package:santa_app/presentation/blocs/data_bloc/data_event.dart';
+import 'package:santa_app/presentation/blocs/data_bloc/data_state.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);

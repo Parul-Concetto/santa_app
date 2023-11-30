@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:santa_app/bloc/data_bloc/data_event.dart';
-import 'package:santa_app/bloc/data_bloc/data_state.dart';
 import 'package:santa_app/data/models/children_model.dart';
+import 'package:santa_app/presentation/blocs/data_bloc/data_event.dart';
+import 'package:santa_app/presentation/blocs/data_bloc/data_state.dart';
 
 class DataBloc extends Bloc<DataEvent, DataState> {
   TextEditingController nameController = TextEditingController();
   TextEditingController countryController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Future<void> close() {
@@ -17,6 +18,7 @@ class DataBloc extends Bloc<DataEvent, DataState> {
 
   int? groupValue;
   List<ChildrenModel> dataList = [];
+
   DataBloc() : super(InitialDataState()) {
     on<AddDataEvent>((event, emit) => addData(event, emit));
     on<EditDataEvent>((event, emit) => editData(event, emit));
@@ -26,8 +28,7 @@ class DataBloc extends Bloc<DataEvent, DataState> {
 
   addData(AddDataEvent event, Emitter<DataState> emit) {
     emit(LoadingDataState());
-    if (nameController.text.trim().isNotEmpty &&
-        countryController.text.trim().isNotEmpty) {
+    if (formKey.currentState!.validate()) {
       dataList.add(
         ChildrenModel(
           id: dataList.length,
@@ -39,7 +40,7 @@ class DataBloc extends Bloc<DataEvent, DataState> {
       clearController();
       emit(SuccessDataState());
     } else {
-      emit(ErrorDataState(errorMessage: 'Enter All Data'));
+      emit(ErrorDataState(errorMessage: ''));
     }
   }
 
