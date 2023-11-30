@@ -56,8 +56,10 @@ class HomePage extends StatelessWidget {
           );
         },
         separatorBuilder: (BuildContext context, int index) {
-          return const SizedBox(
-            height: 10,
+          return Divider(
+            height: 1,
+            thickness: 2,
+            color: Colors.purple.shade50,
           );
         },
       ),
