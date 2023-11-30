@@ -1,3 +1,4 @@
+import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:santa_app/presentation/blocs/data_bloc/data_bloc.dart';
 import 'package:santa_app/presentation/blocs/data_bloc/data_event.dart';
@@ -5,29 +6,42 @@ import 'package:santa_app/presentation/blocs/data_bloc/data_state.dart';
 
 void main() {
   group("DataBloc", () {
-    final bloc = DataBloc();
-
+    final dataBloc = DataBloc();
     test("Name TextField is empty", () {
-      expect(bloc.nameController.text = '', '');
+      expect(dataBloc.nameController.text = '', '');
     });
 
     test("Name TextField is not empty", () {
-      expect(bloc.nameController.text = 'demo', 'demo');
+      expect(dataBloc.nameController.text = 'demo', 'demo');
     });
 
     test("Country TextField is empty", () {
-      expect(bloc.countryController.text = '', '');
+      expect(dataBloc.countryController.text = '', '');
     });
 
     test("Country TextField is not empty", () {
-      expect(bloc.countryController.text = 'demo', 'demo');
+      expect(dataBloc.countryController.text = 'demo', 'demo');
     });
-
-    test("added item in Children List", () {
-      expect(bloc.state, equals(LoadingDataState()));
-      bloc.add(AddDataEvent());
-      expect(bloc.state, equals(SuccessDataState()));
-      bloc.close();
-    });
+    blocTest('list is added',
+        build: () => DataBloc(),
+        act: (bloc) => bloc.add(LoadDataEvent()),
+        expect: () => [LoadingDataState(), SuccessDataState()]);
+    blocTest('Editing data updates state to SuccessDataState',
+        build: () => DataBloc(),
+        act: (bloc) {
+          bloc.add(LoadDataEvent());
+          bloc.add(EditDataEvent(
+              index: 0,
+              id: 1,
+              name: 'Updated',
+              country: 'Updated',
+              isNaughty: false));
+        },
+        expect: () => [
+              LoadingDataState(),
+              SuccessDataState(),
+              LoadingDataState(),
+              SuccessDataState()
+            ]);
   });
 }

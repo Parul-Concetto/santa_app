@@ -1,5 +1,8 @@
+import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:santa_app/presentation/blocs/data_bloc/data_bloc.dart';
 import 'package:santa_app/presentation/blocs/data_bloc/data_event.dart';
+import 'package:santa_app/presentation/blocs/data_bloc/data_state.dart';
 
 void main() {
   group("DataEvent", () {
@@ -22,7 +25,7 @@ void main() {
     });
     group("ChangeStatusEvent", () {
       test("support value equality", () {
-        expect(ChangeStatusEvent(value: false), ChangeStatusEvent(value: true));
+        expect(ChangeStatusEvent(value: true).value, true);
       });
     });
     group("EditDataEvent", () {
@@ -34,5 +37,9 @@ void main() {
                 name: 'Parul', id: 5, country: 'India', isNaughty: false));
       });
     });
+    blocTest('',
+        build: () => DataBloc(),
+        act: (bloc) => bloc.add(LoadDataEvent()),
+        expect: () => [LoadingDataState(), SuccessDataState()]);
   });
 }

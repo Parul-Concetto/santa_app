@@ -16,7 +16,7 @@ class LoadDataEvent extends DataEvent {}
 class ChangeStatusEvent extends DataEvent {
   final bool? value;
 
-  ChangeStatusEvent({required this.value});
+  ChangeStatusEvent({this.value});
 }
 
 class EditDataEvent extends DataEvent {
