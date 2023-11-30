@@ -20,6 +20,7 @@ class OpenDialog extends StatelessWidget {
       listener: (context, state) {
         if (state is SuccessDataState) {
           Navigator.pop(context);
+          bloc.clearController();
         }
         if (state is ErrorDataState) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
