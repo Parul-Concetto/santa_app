@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:santa_app/presentation/pages/add_uodate_page.dart';
+import 'package:santa_app/presentation/pages/add_update_page.dart';
 import 'package:santa_app/presentation/pages/list_page.dart';
 
 class AppRoutes {
