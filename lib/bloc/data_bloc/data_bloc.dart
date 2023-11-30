@@ -31,7 +31,7 @@ class DataBloc extends Bloc<DataEvent, DataState> {
         countryController.text.trim().isNotEmpty) {
       dataList.add(
         ChildrenModel(
-          id: dataList.length,
+          id: dataList.length + 1,
           name: nameController.text.trim(),
           country: countryController.text.trim(),
           isNaughty: groupValue == null ? false : true,
@@ -115,9 +115,11 @@ class DataBloc extends Bloc<DataEvent, DataState> {
     groupValue = null;
   }
 
-  void addEditData(int index) {
-    nameController.text = dataList[index].name;
-    countryController.text = dataList[index].country;
-    groupValue = dataList[index].isNaughty ?? false ? 1 : 0;
+  void addEditData(int? index) {
+    if (index != null) {
+      nameController.text = dataList[index].name;
+      countryController.text = dataList[index].country;
+      groupValue = dataList[index].isNaughty ?? false ? 1 : 0;
+    }
   }
 }

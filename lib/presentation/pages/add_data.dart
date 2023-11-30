@@ -5,28 +5,17 @@ import 'package:santa_app/bloc/data_bloc/data_event.dart';
 import 'package:santa_app/bloc/data_bloc/data_state.dart';
 import 'package:santa_app/core/app_strings.dart';
 
-class OpenDialog extends StatefulWidget {
+class OpenDialog extends StatelessWidget {
   const OpenDialog({
     super.key,
   });
 
   @override
-  State<OpenDialog> createState() => _OpenDialogState();
-}
-
-class _OpenDialogState extends State<OpenDialog> {
-  late Map<String, dynamic> data;
-  dynamic bloc;
-  @override
-  void initState() {
-    data = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-    BlocProvider.of<DataBloc>(context).addEditData(data['index']);
-    bloc = BlocProvider.of<DataBloc>(context);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    var data =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    BlocProvider.of<DataBloc>(context).addEditData(data?['index']);
+    var bloc = BlocProvider.of<DataBloc>(context);
     return BlocConsumer<DataBloc, DataState>(
       listener: (context, state) {
         if (state is SuccessDataState) {
@@ -63,7 +52,7 @@ class _OpenDialogState extends State<OpenDialog> {
                 const Text(AppStrings.name),
                 TextFormField(
                   controller: bloc.nameController,
-                  readOnly: data['isEditPage'] ?? false,
+                  readOnly: data?['isEditPage'] ?? false,
                 ),
                 const SizedBox(
                   height: 25,
@@ -71,7 +60,7 @@ class _OpenDialogState extends State<OpenDialog> {
                 const Text(AppStrings.country),
                 TextFormField(
                   controller: bloc.countryController,
-                  readOnly: data['isEditPage'] ?? false,
+                  readOnly: data?['isEditPage'] ?? false,
                 ),
                 const SizedBox(
                   height: 25,
@@ -118,20 +107,22 @@ class _OpenDialogState extends State<OpenDialog> {
                     height: 50,
                     width: 120,
                     child: ElevatedButton(
-                      onPressed: () => data['isEditPage']
+                      onPressed: () => data?['isEditPage'] ?? false
                           ? bloc.add(
                               EditDataEvent(
-                                id: bloc.dataList[data['index']].id,
-                                name: bloc.dataList[data['index']].name,
-                                country: bloc.dataList[data['index']].country,
+                                id: bloc.dataList[data?['index']].id,
+                                name: bloc.dataList[data?['index']].name,
+                                country: bloc.dataList[data?['index']].country,
                                 isNaughty: bloc.groupValue == 1 ? true : false,
-                                index: data['index'],
+                                index: data?['index'],
                               ),
                             )
                           : bloc.add(AddDataEvent()),
-                      child: const Text(
-                        AppStrings.submit,
-                        style: TextStyle(fontSize: 18),
+                      child: Text(
+                        data?['isEditPage'] ?? false
+                            ? AppStrings.edit
+                            : AppStrings.submit,
+                        style: const TextStyle(fontSize: 18),
                       ),
                     ),
                   ),
