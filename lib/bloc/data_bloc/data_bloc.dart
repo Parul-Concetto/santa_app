@@ -13,6 +13,7 @@ class DataBloc extends Bloc<DataEvent, DataState> {
 
   @override
   Future<void> close() {
+    /// dispose all controller
     countryController.dispose();
     nameController.dispose();
     return super.close();
@@ -25,6 +26,7 @@ class DataBloc extends Bloc<DataEvent, DataState> {
     on<ChangeStatusEvent>((event, emit) => changeStatus(event, emit));
   }
 
+  ///function to add data in list
   addData(AddDataEvent event, Emitter<DataState> emit) {
     emit(LoadingDataState());
     if (nameController.text.trim().isNotEmpty &&
@@ -44,6 +46,7 @@ class DataBloc extends Bloc<DataEvent, DataState> {
     }
   }
 
+  ///function to edit data in list
   editData(EditDataEvent event, Emitter<DataState> emit) {
     emit(LoadingDataState());
     dataList.removeAt(event.index as int);
@@ -57,6 +60,7 @@ class DataBloc extends Bloc<DataEvent, DataState> {
     emit(SuccessDataState());
   }
 
+  /// function to to load data in list
   loadData(LoadDataEvent event, Emitter<DataState> emit) {
     emit(LoadingDataState());
     dataList = [
@@ -103,18 +107,21 @@ class DataBloc extends Bloc<DataEvent, DataState> {
     emit(SuccessDataState());
   }
 
+  /// function to update status of child
   changeStatus(ChangeStatusEvent event, Emitter<DataState> emit) {
     emit(LoadingDataState());
     groupValue = event.value ?? false ? 1 : 0;
     emit(StatusChange());
   }
 
+  /// clear controllers
   void clearController() {
     nameController.clear();
     countryController.clear();
     groupValue = null;
   }
 
+  ///add data to controllers
   void addEditData(int? index) {
     if (index != null) {
       nameController.text = dataList[index].name;

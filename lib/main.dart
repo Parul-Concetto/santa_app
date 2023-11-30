@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
+      /// add bloc in root so we can use it any where in app
       providers: [
         BlocProvider(create: (context) => DataBloc()),
       ],
