@@ -10,4 +10,5 @@ class AppStrings {
   static const String submit = "Submit";
   static const String add = "Add";
   static const String addInformation = "Add Information";
+  static const String edit = "Edit";
 }

@@ -8,23 +8,32 @@ import 'package:santa_app/presentation/blocs/data_bloc/data_state.dart';
 class OpenDialog extends StatelessWidget {
   const OpenDialog({
     super.key,
-    this.name,
-    this.selectedOption = 1,
   });
-
-  final TextEditingController? name;
-  final int? selectedOption;
 
   @override
   Widget build(BuildContext context) {
+    var data =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    BlocProvider.of<DataBloc>(context).addEditData(data?['index']);
+    var bloc = BlocProvider.of<DataBloc>(context);
     return BlocConsumer<DataBloc, DataState>(
       listener: (context, state) {
         if (state is SuccessDataState) {
           Navigator.pop(context);
         }
+        if (state is ErrorDataState) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+              '${state.errorMessage}',
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            backgroundColor: Colors.red,
+          ));
+        }
       },
       builder: (context, state) {
-        final bloc = BlocProvider.of<DataBloc>(context);
         return Scaffold(
           appBar: AppBar(
               title: const Text(AppStrings.addInformation),

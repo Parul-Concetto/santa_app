@@ -24,19 +24,16 @@ class EditDataEvent extends DataEvent {
   final String name;
   final String country;
   final bool? isNaughty;
+  final int? index;
 
   EditDataEvent({
     required this.id,
     required this.name,
     required this.country,
     this.isNaughty,
+    this.index,
   });
 
   @override
-  List<Object?> get props => [
-        id,
-        name,
-        country,
-        isNaughty,
-      ];
+  List<Object?> get props => [id, name, country, isNaughty, index];
 }
