@@ -10,10 +10,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: AppRoutes.routes,
-      theme: ThemeData(useMaterial3: true, fontFamily: 'Poppins'),
-      //home: HomePage(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => DataBloc()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        routes: AppRoutes.routes,
+        theme: ThemeData(useMaterial3: true,fontFamily: 'Poppins'),
+      ),
     );
   }
 }
