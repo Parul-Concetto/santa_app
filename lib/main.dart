@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:santa_app/pages/list_page.dart';
+import 'package:santa_app/core/routes/app_routes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,8 +11,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: AppRoutes.routes,
       theme: ThemeData(useMaterial3: true),
-      home: HomePage(),
+      //home: HomePage(),
     );
   }
 }
