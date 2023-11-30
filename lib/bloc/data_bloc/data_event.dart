@@ -7,6 +7,8 @@ abstract class DataEvent extends Equatable {
 
 class AddDataEvent extends DataEvent {}
 
+class LoadDataEvent extends DataEvent {}
+
 class EditDataEvent extends DataEvent {
   final int id;
   final String name;
