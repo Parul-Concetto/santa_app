@@ -6,7 +6,7 @@ class AppRoutes {
   static String initial = '/';
   static String add = '/add_info';
   static Map<String, Widget Function(BuildContext)> routes = {
-    initial: (context) => HomePage(),
+    initial: (context) => const HomePage(),
     add: (context) => const OpenDialog(),
   };
 }

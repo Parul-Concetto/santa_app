@@ -5,9 +5,19 @@ abstract class DataEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class AddDataEvent extends DataEvent {}
+class AddDataEvent extends DataEvent {
+  final bool? isNaughty;
+
+  AddDataEvent({this.isNaughty});
+}
 
 class LoadDataEvent extends DataEvent {}
+
+class ChangeStatusEvent extends DataEvent {
+  final bool? value;
+
+  ChangeStatusEvent({required this.value});
+}
 
 class EditDataEvent extends DataEvent {
   final int id;

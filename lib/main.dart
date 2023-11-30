@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:santa_app/bloc/data_bloc/data_bloc.dart';
 import 'package:santa_app/core/routes/app_routes.dart';
 
 void main() {
@@ -10,11 +12,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      routes: AppRoutes.routes,
-      theme: ThemeData(useMaterial3: true),
-      home: HomePage(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => DataBloc()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        routes: AppRoutes.routes,
+        theme: ThemeData(useMaterial3: true),
+      ),
     );
   }
 }

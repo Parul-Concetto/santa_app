@@ -11,6 +11,8 @@ class LoadingDataState extends DataState {}
 
 class SuccessDataState extends DataState {}
 
+class StatusChange extends DataState {}
+
 class ErrorDataState extends DataState {
   final String? errorMessage;
 
