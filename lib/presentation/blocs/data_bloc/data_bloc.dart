@@ -10,6 +10,8 @@ class DataBloc extends Bloc<DataEvent, DataState> {
   int? groupValue;
   List<ChildrenModel> dataList = [];
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  bool? isNameEmpty;
+  bool? isCountryNameEmpty;
 
   @override
   Future<void> close() {
@@ -28,21 +30,35 @@ class DataBloc extends Bloc<DataEvent, DataState> {
   ///function to add data in list
   addData(AddDataEvent event, Emitter<DataState> emit) {
     emit(LoadingDataState());
-    if (formKey.currentState != null) {
-      if (formKey.currentState!.validate()) {
-        dataList.add(
-          ChildrenModel(
-            id: dataList.length + 1,
-            name: nameController.text.trim(),
-            country: countryController.text.trim(),
-            isNaughty: groupValue == null ? false : true,
-          ),
-        );
-        clearController();
-        emit(SuccessDataState());
-      }
+    if (nameController.text.trim().isEmpty &&
+        countryController.text.trim().isEmpty) {
+      isNameEmpty = true;
+      isCountryNameEmpty = true;
+      emit(ErrorDataState());
+    } else if (nameController.text.trim().isNotEmpty &&
+        countryController.text.trim().isEmpty) {
+      isNameEmpty = false;
+      isCountryNameEmpty = true;
+
+      emit(ErrorDataState());
+    } else if (nameController.text.trim().isEmpty &&
+        countryController.text.trim().isNotEmpty) {
+      isNameEmpty = true;
+      isCountryNameEmpty = false;
+      emit(ErrorDataState());
     } else {
-      emit(ErrorDataState(errorMessage: ''));
+      isCountryNameEmpty = false;
+      isNameEmpty = false;
+      dataList.add(
+        ChildrenModel(
+          id: dataList.length + 1,
+          name: nameController.text.trim(),
+          country: countryController.text.trim(),
+          isNaughty: groupValue == null ? false : true,
+        ),
+      );
+      emit(SuccessDataState());
+      clearController();
     }
   }
 
@@ -81,12 +97,5 @@ class DataBloc extends Bloc<DataEvent, DataState> {
       countryController.text = dataList[index].country;
       groupValue = dataList[index].isNaughty ?? false ? 1 : 0;
     }
-  }
-
-  validation(String? value, bool isNameController) {
-    if (value == null || value.isEmpty) {
-      return isNameController ? 'Please Enter Name' : 'Please Enter Country';
-    }
-    return null;
   }
 }

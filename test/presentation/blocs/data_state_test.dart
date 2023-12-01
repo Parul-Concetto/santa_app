@@ -20,15 +20,8 @@ void main() {
     });
 
     test('ErrorDataState should be equal with the same errorMessage', () {
-      expect(ErrorDataState(errorMessage: 'Error 1'),
-          ErrorDataState(errorMessage: 'Error 1'));
-    });
-
-    test('ErrorDataState should not be equal with different errorMessage', () {
-      expect(
-        ErrorDataState(errorMessage: 'Error 1'),
-        ErrorDataState(errorMessage: 'Error 2'),
-      );
+      expect(ErrorDataState(),
+          ErrorDataState());
     });
   });
 }

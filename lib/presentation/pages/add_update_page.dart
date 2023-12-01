@@ -34,99 +34,121 @@ class AddORUpdatePage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(
                 horizontal: 20,
               ),
-              child: Form(
-                key: bloc.formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    const Text(
-                      AppStrings.name,
-                    ),
-                    TextFormField(
-                        controller: bloc.nameController,
-                        readOnly: data?['isEditPage'] ?? false,
-                        validator: (value) => bloc.validation(value, true)),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    const Text(AppStrings.country),
-                    TextFormField(
-                      controller: bloc.countryController,
-                      readOnly: data?['isEditPage'] ?? false,
-                      validator: (value) => bloc.validation(value, false),
-                    ),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    const Text(AppStrings.status),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  const Text(
+                    AppStrings.name,
+                  ),
+                  TextFormField(
+                    controller: bloc.nameController,
+                    readOnly: data?['isEditPage'] ?? false,
+                  ),
+                  (state is ErrorDataState && bloc.isNameEmpty == true)
+                      ? const Column(
                           children: [
-                            Radio(
-                              value: 0,
-                              groupValue: bloc.groupValue ?? 0,
-                              onChanged: (value) {
-                                bloc.add(ChangeStatusEvent(value: false));
-                              },
+                            SizedBox(
+                              height: 10,
                             ),
-                            const Text(AppStrings.nice),
+                            Text(
+                              'Enter Name',
+                              style: TextStyle(color: Colors.red),
+                            ),
                           ],
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Row(
+                        )
+                      : const SizedBox.shrink(),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  const Text(AppStrings.country),
+                  TextFormField(
+                    controller: bloc.countryController,
+                    readOnly: data?['isEditPage'] ?? false,
+                  ),
+                  (state is ErrorDataState && bloc.isCountryNameEmpty == true)
+                      ? const Column(
                           children: [
-                            Radio(
-                              value: 1,
-                              groupValue: bloc.groupValue ?? 0,
-                              onChanged: (value) {
-                                bloc.add(ChangeStatusEvent(value: true));
-                              },
+                            SizedBox(
+                              height: 10,
                             ),
-                            const Text(AppStrings.naughty),
+                            Text(
+                              'Enter Country Name',
+                              style: TextStyle(color: Colors.red),
+                            ),
                           ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 70,
-                    ),
-                    Center(
-                      child: SizedBox(
-                        height: 50,
-                        width: 120,
-                        child: ElevatedButton(
-                          onPressed: () => data?['isEditPage'] ?? false
-                              ? bloc.add(
-                                  EditDataEvent(
-                                    id: bloc.dataList[data?['index']].id,
-                                    name: bloc.dataList[data?['index']].name,
-                                    country:
-                                        bloc.dataList[data?['index']].country,
-                                    isNaughty:
-                                        bloc.groupValue == 1 ? true : false,
-                                    index: data?['index'],
-                                  ),
-                                )
-                              : bloc.add(AddDataEvent()),
-                          child: Text(
-                            data?['isEditPage'] ?? false
-                                ? AppStrings.edit
-                                : AppStrings.submit,
-                            style: const TextStyle(fontSize: 18),
+                        )
+                      : const SizedBox.shrink(),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  const Text(AppStrings.status),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Radio(
+                            value: 0,
+                            groupValue: bloc.groupValue ?? 0,
+                            onChanged: (value) {
+                              bloc.add(ChangeStatusEvent(value: false));
+                            },
                           ),
+                          const Text(AppStrings.nice),
+                        ],
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Row(
+                        children: [
+                          Radio(
+                            value: 1,
+                            groupValue: bloc.groupValue ?? 0,
+                            onChanged: (value) {
+                              bloc.add(ChangeStatusEvent(value: true));
+                            },
+                          ),
+                          const Text(AppStrings.naughty),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 70,
+                  ),
+                  Center(
+                    child: SizedBox(
+                      height: 50,
+                      width: 120,
+                      child: ElevatedButton(
+                        onPressed: () => data?['isEditPage'] ?? false
+                            ? bloc.add(
+                                EditDataEvent(
+                                  id: bloc.dataList[data?['index']].id,
+                                  name: bloc.dataList[data?['index']].name,
+                                  country:
+                                      bloc.dataList[data?['index']].country,
+                                  isNaughty:
+                                      bloc.groupValue == 1 ? true : false,
+                                  index: data?['index'],
+                                ),
+                              )
+                            : bloc.add(AddDataEvent()),
+                        child: Text(
+                          data?['isEditPage'] ?? false
+                              ? AppStrings.edit
+                              : AppStrings.submit,
+                          style: const TextStyle(fontSize: 18),
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
