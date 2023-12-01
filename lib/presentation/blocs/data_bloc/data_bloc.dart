@@ -28,17 +28,21 @@ class DataBloc extends Bloc<DataEvent, DataState> {
   ///function to add data in list
   addData(AddDataEvent event, Emitter<DataState> emit) {
     emit(LoadingDataState());
-    if (formKey.currentState?.validate() ?? false) {
-      dataList.add(
-        ChildrenModel(
-          id: dataList.length + 1,
-          name: nameController.text.trim(),
-          country: countryController.text.trim(),
-          isNaughty: groupValue == null ? false : true,
-        ),
-      );
-      clearController();
-      emit(SuccessDataState());
+    if (formKey.currentState != null) {
+      if (formKey.currentState!.validate()) {
+        dataList.add(
+          ChildrenModel(
+            id: dataList.length + 1,
+            name: nameController.text.trim(),
+            country: countryController.text.trim(),
+            isNaughty: groupValue == null ? false : true,
+          ),
+        );
+        clearController();
+        emit(SuccessDataState());
+      }
+    } else {
+      emit(ErrorDataState(errorMessage: ''));
     }
   }
 

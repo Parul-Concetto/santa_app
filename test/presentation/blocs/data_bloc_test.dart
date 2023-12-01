@@ -1,5 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:santa_app/presentation/blocs/data_bloc/data_bloc.dart';
 import 'package:santa_app/presentation/blocs/data_bloc/data_event.dart';
@@ -64,8 +65,9 @@ void main() {
     blocTest<DataBloc, DataState>('Validation',
         build: () => DataBloc(),
         act: (bloc) {
-          bloc.nameController = TextEditingController();
-          bloc.countryController = TextEditingController();
+          bloc.formKey = formKey;
+          bloc.nameController.text = 'add';
+          bloc.countryController.text = 'f';
           bloc.groupValue = 1;
           bloc.add(AddDataEvent());
         },
