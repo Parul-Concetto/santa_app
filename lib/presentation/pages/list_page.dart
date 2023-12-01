@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
         builder: (context, state) {
           return BlocProvider.of<DataBloc>(context).dataList.isEmpty
               ? const Center(
-                  child: Text('No Data Found'),
+                  child: Text('Please click on + button to add data into list'),
                 )
               : ListView.separated(
                   itemCount: BlocProvider.of<DataBloc>(context).dataList.length,
