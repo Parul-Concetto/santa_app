@@ -11,8 +11,6 @@ class AddDataEvent extends DataEvent {
   AddDataEvent({this.isNaughty});
 }
 
-class LoadDataEvent extends DataEvent {}
-
 class ChangeStatusEvent extends DataEvent {
   final bool? value;
 
