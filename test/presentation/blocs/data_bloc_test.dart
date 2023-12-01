@@ -22,6 +22,14 @@ void main() {
     test("Country TextField is not empty", () {
       expect(dataBloc.countryController.text = 'demo', 'demo');
     });
+    test('Validation check for Name TextField', () {
+      expect(dataBloc.validation(dataBloc.nameController.text, true),
+          dataBloc.validation(dataBloc.nameController.text, true));
+    });
+    test('Validation check for Country TextField', () {
+      expect(dataBloc.validation(dataBloc.countryController.text, false),
+          dataBloc.validation(dataBloc.countryController.text, false));
+    });
     blocTest('list is added',
         build: () => DataBloc(),
         act: (bloc) => bloc.add(LoadDataEvent()),

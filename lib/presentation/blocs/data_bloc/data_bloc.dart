@@ -128,4 +128,11 @@ class DataBloc extends Bloc<DataEvent, DataState> {
       groupValue = dataList[index].isNaughty ?? false ? 1 : 0;
     }
   }
+
+  validation(String? value, bool isNameController) {
+    if (value == null || value.isEmpty) {
+      return isNameController ? 'Please Enter Name' : 'Please Enter Country';
+    }
+    return null;
+  }
 }

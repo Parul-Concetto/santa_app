@@ -44,7 +44,7 @@ class AddORUpdatePage extends StatelessWidget {
                   const Text(AppStrings.name),
                   TextFormField(
                     controller: bloc.nameController,
-                    validator: (value) => validation(value, true),
+                    validator: (value) => bloc.validation(value, true),
                     readOnly: data?['isEditPage'] ?? false,
                   ),
                   const SizedBox(
@@ -53,7 +53,7 @@ class AddORUpdatePage extends StatelessWidget {
                   const Text(AppStrings.country),
                   TextFormField(
                     controller: bloc.countryController,
-                    validator: (value) => validation(value, false),
+                    validator: (value) => bloc.validation(value, false),
                     readOnly: data?['isEditPage'] ?? false,
                   ),
                   const SizedBox(
@@ -130,12 +130,5 @@ class AddORUpdatePage extends StatelessWidget {
         );
       },
     );
-  }
-
-  validation(String? value, bool isNameController) {
-    if (value == null || value.isEmpty) {
-      return isNameController ? 'Please Enter Name' : 'Please Enter Country';
-    }
-    return null;
   }
 }
