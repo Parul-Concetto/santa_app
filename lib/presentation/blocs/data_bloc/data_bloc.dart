@@ -22,7 +22,6 @@ class DataBloc extends Bloc<DataEvent, DataState> {
   DataBloc() : super(InitialDataState()) {
     on<AddDataEvent>((event, emit) => addData(event, emit));
     on<EditDataEvent>((event, emit) => editData(event, emit));
-    on<LoadDataEvent>((event, emit) => loadData(event, emit));
     on<ChangeStatusEvent>((event, emit) => changeStatus(event, emit));
   }
 
@@ -56,53 +55,6 @@ class DataBloc extends Bloc<DataEvent, DataState> {
             name: event.name,
             country: event.country,
             isNaughty: event.isNaughty));
-    emit(SuccessDataState());
-  }
-
-  /// function to to load data in list
-  loadData(LoadDataEvent event, Emitter<DataState> emit) {
-    emit(LoadingDataState());
-    dataList = [
-      const ChildrenModel(
-        id: 1,
-        name: 'Joy',
-        country: 'India',
-        isNaughty: true,
-      ),
-      const ChildrenModel(
-        id: 2,
-        name: 'Ritik',
-        country: 'India',
-      ),
-      const ChildrenModel(
-        id: 3,
-        name: 'Malvika',
-        country: 'Afghanistan',
-        isNaughty: true,
-      ),
-      const ChildrenModel(
-        id: 4,
-        name: 'Ishan',
-        country: 'Australia',
-        isNaughty: true,
-      ),
-      const ChildrenModel(
-        id: 5,
-        name: 'Moksh',
-        country: 'Bangladesh',
-      ),
-      const ChildrenModel(
-        id: 6,
-        name: 'Megha',
-        country: 'India',
-        isNaughty: true,
-      ),
-      const ChildrenModel(
-        id: 7,
-        name: 'Nistha',
-        country: 'India',
-      ),
-    ];
     emit(SuccessDataState());
   }
 

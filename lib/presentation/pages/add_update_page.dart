@@ -22,6 +22,20 @@ class AddORUpdatePage extends StatelessWidget {
           Navigator.pop(context);
           bloc.clearController();
         }
+<<<<<<<<< Temporary merge branch 1:lib/presentation/pages/add_data.dart
+=========
+        if (state is ErrorDataState) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+              '${state.errorMessage}',
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            backgroundColor: Colors.red,
+          ));
+        }
+>>>>>>>>> Temporary merge branch 2:lib/presentation/pages/add_update_page.dart
       },
       builder: (context, state) {
         return Scaffold(
@@ -29,101 +43,104 @@ class AddORUpdatePage extends StatelessWidget {
               title: const Text(AppStrings.addInformation),
               centerTitle: true,
               elevation: 1),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-            ),
-            child: Form(
-              key: bloc.formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  const Text(AppStrings.name),
-                  TextFormField(
-                    controller: bloc.nameController,
-                    validator: (value) => bloc.validation(value, true),
-                    readOnly: data?['isEditPage'] ?? false,
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  const Text(AppStrings.country),
-                  TextFormField(
-                    controller: bloc.countryController,
-                    validator: (value) => bloc.validation(value, false),
-                    readOnly: data?['isEditPage'] ?? false,
-                  ),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  const Text(AppStrings.status),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Radio(
-                            value: 0,
-                            groupValue: bloc.groupValue ?? 0,
-                            onChanged: (value) {
-                              bloc.add(ChangeStatusEvent(value: false));
-                            },
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+              ),
+              child: Form(
+                key: bloc.formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    const Text(
+                      AppStrings.name,
+                    ),
+                    TextFormField(
+                        controller: bloc.nameController,
+                        readOnly: data?['isEditPage'] ?? false,
+                        validator: (value) => validation(value, true)),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    const Text(AppStrings.country),
+                    TextFormField(
+                      controller: bloc.countryController,
+                      readOnly: data?['isEditPage'] ?? false,
+                      validator: (value) => validation(value, false),
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    const Text(AppStrings.status),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Radio(
+                              value: 0,
+                              groupValue: bloc.groupValue ?? 0,
+                              onChanged: (value) {
+                                bloc.add(ChangeStatusEvent(value: false));
+                              },
+                            ),
+                            const Text(AppStrings.nice),
+                          ],
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Row(
+                          children: [
+                            Radio(
+                              value: 1,
+                              groupValue: bloc.groupValue ?? 0,
+                              onChanged: (value) {
+                                bloc.add(ChangeStatusEvent(value: true));
+                              },
+                            ),
+                            const Text(AppStrings.naughty),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 70,
+                    ),
+                    Center(
+                      child: SizedBox(
+                        height: 50,
+                        width: 120,
+                        child: ElevatedButton(
+                          onPressed: () => data?['isEditPage'] ?? false
+                              ? bloc.add(
+                                  EditDataEvent(
+                                    id: bloc.dataList[data?['index']].id,
+                                    name: bloc.dataList[data?['index']].name,
+                                    country:
+                                        bloc.dataList[data?['index']].country,
+                                    isNaughty:
+                                        bloc.groupValue == 1 ? true : false,
+                                    index: data?['index'],
+                                  ),
+                                )
+                              : bloc.add(AddDataEvent()),
+                          child: Text(
+                            data?['isEditPage'] ?? false
+                                ? AppStrings.edit
+                                : AppStrings.submit,
+                            style: const TextStyle(fontSize: 18),
                           ),
-                          const Text(AppStrings.nice),
-                        ],
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Row(
-                        children: [
-                          Radio(
-                            value: 1,
-                            groupValue: bloc.groupValue ?? 0,
-                            onChanged: (value) {
-                              bloc.add(ChangeStatusEvent(value: true));
-                            },
-                          ),
-                          const Text(AppStrings.naughty),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 70,
-                  ),
-                  Center(
-                    child: SizedBox(
-                      height: 50,
-                      width: 120,
-                      child: ElevatedButton(
-                        onPressed: () => data?['isEditPage'] ?? false
-                            ? bloc.add(
-                                EditDataEvent(
-                                  id: bloc.dataList[data?['index']].id,
-                                  name: bloc.dataList[data?['index']].name,
-                                  country:
-                                      bloc.dataList[data?['index']].country,
-                                  isNaughty:
-                                      bloc.groupValue == 1 ? true : false,
-                                  index: data?['index'],
-                                ),
-                              )
-                            : bloc.add(AddDataEvent()),
-                        child: Text(
-                          data?['isEditPage'] ?? false
-                              ? AppStrings.edit
-                              : AppStrings.submit,
-                          style: const TextStyle(fontSize: 18),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
