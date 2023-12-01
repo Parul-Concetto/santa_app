@@ -9,7 +9,7 @@ class DataBloc extends Bloc<DataEvent, DataState> {
   TextEditingController countryController = TextEditingController();
   int? groupValue;
   List<ChildrenModel> dataList = [];
-  final formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Future<void> close() {
@@ -28,7 +28,7 @@ class DataBloc extends Bloc<DataEvent, DataState> {
   ///function to add data in list
   addData(AddDataEvent event, Emitter<DataState> emit) {
     emit(LoadingDataState());
-    if (formKey.currentState!.validate()) {
+    if (formKey.currentState?.validate() ?? false) {
       dataList.add(
         ChildrenModel(
           id: dataList.length + 1,
@@ -39,8 +39,6 @@ class DataBloc extends Bloc<DataEvent, DataState> {
       );
       clearController();
       emit(SuccessDataState());
-    } else {
-      emit(ErrorDataState(errorMessage: ''));
     }
   }
 

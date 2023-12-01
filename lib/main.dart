@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:santa_app/core/routes/app_routes.dart';
 import 'package:santa_app/presentation/blocs/data_bloc/data_bloc.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
 }
 

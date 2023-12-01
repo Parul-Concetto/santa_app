@@ -1,12 +1,20 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:santa_app/presentation/blocs/data_bloc/data_bloc.dart';
 import 'package:santa_app/presentation/blocs/data_bloc/data_event.dart';
 import 'package:santa_app/presentation/blocs/data_bloc/data_state.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   group("DataBloc", () {
-    final dataBloc = DataBloc();
+    late DataBloc dataBloc;
+    late GlobalKey<FormState> formKey;
+    setUp(() {
+      dataBloc = DataBloc();
+      formKey = GlobalKey<FormState>();
+    });
+
     test("Name TextField is empty", () {
       expect(dataBloc.nameController.text = '', '');
     });
@@ -30,14 +38,56 @@ void main() {
       expect(dataBloc.validation(dataBloc.countryController.text, false),
           dataBloc.validation(dataBloc.countryController.text, false));
     });
-    blocTest('list is added',
+    blocTest<DataBloc, DataState>('Validation state is null',
         build: () => DataBloc(),
-        act: (bloc) => bloc.add(LoadDataEvent()),
-        expect: () => [LoadingDataState(), SuccessDataState()]);
+        act: (bloc) {
+          bloc.add(AddDataEvent());
+        },
+        expect: () => [
+              LoadingDataState(),
+              ErrorDataState(errorMessage: ''),
+            ]);
+    blocTest<DataBloc, DataState>(
+      'emits LoadingDataState and SuccessDataState when addData is successful',
+      build: () {
+        return dataBloc;
+      },
+      act: (bloc) {
+        dataBloc.formKey = formKey;
+        bloc.add(AddDataEvent());
+      },
+      expect: () => [
+        isA<LoadingDataState>(),
+        isA<SuccessDataState>(),
+      ],
+    );
+    blocTest<DataBloc, DataState>('Validation',
+        build: () => DataBloc(),
+        act: (bloc) {
+          bloc.nameController = TextEditingController();
+          bloc.countryController = TextEditingController();
+          bloc.groupValue = 1;
+          bloc.add(AddDataEvent());
+        },
+        expect: () => [
+              LoadingDataState(),
+              SuccessDataState(),
+            ]);
+
+    blocTest<DataBloc, DataState>('add data in list',
+        build: () => DataBloc(),
+        act: (bloc) {
+          // bloc.formKey = GlobalKey<FormState>();
+          bloc.nameController = TextEditingController();
+          bloc.countryController = TextEditingController();
+          bloc.groupValue = 1;
+          bloc.add(AddDataEvent());
+        },
+        expect: () => SuccessDataState());
     blocTest('Editing data updates state to SuccessDataState',
         build: () => DataBloc(),
         act: (bloc) {
-          bloc.add(LoadDataEvent());
+          bloc.add(AddDataEvent());
           bloc.add(EditDataEvent(
               index: 0,
               id: 1,

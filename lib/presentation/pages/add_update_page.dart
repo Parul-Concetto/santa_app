@@ -22,20 +22,6 @@ class AddORUpdatePage extends StatelessWidget {
           Navigator.pop(context);
           bloc.clearController();
         }
-<<<<<<<<< Temporary merge branch 1:lib/presentation/pages/add_data.dart
-=========
-        if (state is ErrorDataState) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(
-              '${state.errorMessage}',
-              style: const TextStyle(
-                color: Colors.white,
-              ),
-            ),
-            backgroundColor: Colors.red,
-          ));
-        }
->>>>>>>>> Temporary merge branch 2:lib/presentation/pages/add_update_page.dart
       },
       builder: (context, state) {
         return Scaffold(
@@ -62,7 +48,7 @@ class AddORUpdatePage extends StatelessWidget {
                     TextFormField(
                         controller: bloc.nameController,
                         readOnly: data?['isEditPage'] ?? false,
-                        validator: (value) => validation(value, true)),
+                        validator: (value) => bloc.validation(value, true)),
                     const SizedBox(
                       height: 25,
                     ),
@@ -70,7 +56,7 @@ class AddORUpdatePage extends StatelessWidget {
                     TextFormField(
                       controller: bloc.countryController,
                       readOnly: data?['isEditPage'] ?? false,
-                      validator: (value) => validation(value, false),
+                      validator: (value) => bloc.validation(value, false),
                     ),
                     const SizedBox(
                       height: 25,
