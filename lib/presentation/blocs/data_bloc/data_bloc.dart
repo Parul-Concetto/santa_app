@@ -29,11 +29,10 @@ class DataBloc extends Bloc<DataEvent, DataState> {
   ///function to add data in list
   addData(AddDataEvent event, Emitter<DataState> emit) {
     emit(LoadingDataState());
-    if (nameController.text.trim().isNotEmpty &&
-        countryController.text.trim().isNotEmpty) {
+    if (formKey.currentState!.validate()) {
       dataList.add(
         ChildrenModel(
-          id: dataList.length + 1,
+          id: dataList.length,
           name: nameController.text.trim(),
           country: countryController.text.trim(),
           isNaughty: groupValue == null ? false : true,
@@ -42,7 +41,7 @@ class DataBloc extends Bloc<DataEvent, DataState> {
       clearController();
       emit(SuccessDataState());
     } else {
-      emit(ErrorDataState(errorMessage: 'Enter All Data'));
+      emit(ErrorDataState(errorMessage: ''));
     }
   }
 

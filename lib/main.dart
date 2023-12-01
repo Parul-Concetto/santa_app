@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:santa_app/bloc/data_bloc/data_bloc.dart';
 import 'package:santa_app/core/routes/app_routes.dart';
+import 'package:santa_app/presentation/blocs/data_bloc/data_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: AppRoutes.routes,
-        theme: ThemeData(useMaterial3: true),
+        theme: ThemeData(useMaterial3: true, fontFamily: 'Poppins'),
       ),
     );
   }
